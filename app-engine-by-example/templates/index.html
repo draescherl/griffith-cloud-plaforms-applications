@@ -16,16 +16,30 @@
 <div id="login-info" hidden="true">
     <h2>Login Info</h2>
     {% if user_data %}
-    <dl>
-        <dt>Email:</dt>
-        <dd>{{ user_data['email'] }}</dd>
-        <dt>Last 10 Visits:</dt>
-        <dd>
-            {% for time in times %}
-            <p>{{ time['timestamp'] }}</p>
-            {% endfor %}
-        </dd>
-    </dl>
+    <div>
+        <p>Email: {{ user_data['email'] }}</p>
+    </div>
+    <!-- form for adding in a new address -->
+    <form action="/add-address" method="post">
+        Address line 1:<input type="text" name="address1"/><br/>
+        Address line 2:<input type="text" name="address2"/><br/>
+        Address line 3:<input type="text" name="address3"/><br/>
+        Address line 4:<input type="text" name="address4"/><br/>
+        <input type="submit" name="button"/>
+    </form>
+    <br/>
+    <!-- block that will print out the addresses in turn -->
+    {% for address in addresses %}
+    Address {{ loop.index - 1 }}<br/>
+    Address line 1:{{ address.address1 }}<br/>
+    Address line 2:{{ address.address2 }}<br/>
+    Address line 3:{{ address.address3 }}<br/>
+    Address line 4:{{ address.address4 }}<br/>
+    <br/>
+    <form action="/delete-address/{{ loop.index - 1 }}" method="post">
+        <input type="submit" name="delete"/>
+    </form>
+    {% endfor %}
     {% elif error_message %}
     <p>Error Message: {{ error_message }}</p>
     {% endif %}
