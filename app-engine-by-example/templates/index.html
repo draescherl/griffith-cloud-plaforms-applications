@@ -19,25 +19,20 @@
     <div>
         <p>Email: {{ user_data['email'] }}</p>
     </div>
-    <!-- form for adding in a new address -->
-    <form action="/add-address" method="post">
-        Address line 1:<input type="text" name="address1"/><br/>
-        Address line 2:<input type="text" name="address2"/><br/>
-        Address line 3:<input type="text" name="address3"/><br/>
-        Address line 4:<input type="text" name="address4"/><br/>
-        <input type="submit" name="button"/>
+    <form action="/add-directory" method="post">
+        Directory Name: <input type="text" name="dir_name"/><input type="submit"/>
     </form>
-    <br/>
-    <!-- block that will print out the addresses in turn -->
-    {% for address in addresses %}
-    Address {{ loop.index - 1 }}<br/>
-    Address line 1:{{ address.address1 }}<br/>
-    Address line 2:{{ address.address2 }}<br/>
-    Address line 3:{{ address.address3 }}<br/>
-    Address line 4:{{ address.address4 }}<br/>
-    <br/>
-    <form action="/delete-address/{{ loop.index - 1 }}" method="post">
-        <input type="submit" name="delete"/>
+    <form action="/upload-file" method="post" enctype="multipart/form-data">
+        Upload File: <input type="file" name="file_name"/><input type="submit"/>
+    </form>
+    <h1>list of directories</h1><br/>
+    {% for i in directory_list %}
+    {{ i.name }}<br/>
+    {% endfor %}
+    <h1>list of files</h1><br/>
+    {% for i in file_list %}
+    <form action="/download-file/{{ i.name }}" method="post">
+        {{ i.name }}<input type="submit"/><br/>
     </form>
     {% endfor %}
     {% elif error_message %}
