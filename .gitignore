@@ -1,6 +1,9 @@
 # PyCharm
 .idea/
 
+# Cache
+__pycache__/
+
 # Credentials
 gcp-creds.json
 
